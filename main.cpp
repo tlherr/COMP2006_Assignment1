@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Ass1-Boiling-ThomasHerr.h"
 #include "Assn1-TakeAway-ThomasHerr.h"
+#include "Assn1-BiNomialExpansion-ThomasHerr.h"
 
 int main() {
 
@@ -16,6 +17,7 @@ int main() {
     std::printf("=========Questions=========\n");
     std::printf("1) Substance Boiling Point Calculator \n");
     std::printf("2) Fast Food Spending Calculator \n");
+    std::printf("3) Pascals Triangle \n");
 
     for(;;) {
         std::printf("Select a question to run: \n");
@@ -38,6 +40,9 @@ int main() {
             break;
         case 2:
             COMP2006_ASSIGNMENT1_ASSN1_TAKEAWAY_THOMASHERR_H::question_two();
+            break;
+        case 3:
+            COMP2006_ASSIGNMENT1_ASSN1_BINOMIALEXPANSION_THOMASHERR_H::question_three();
             break;
     }
 

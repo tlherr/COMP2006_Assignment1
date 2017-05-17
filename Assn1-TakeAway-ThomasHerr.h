@@ -13,7 +13,7 @@
 
 #include <iostream>
 
-int get_input(){
+int get_year(){
     int year;
     for(;;) {
         std::printf("Enter a 4 digit year greater than 2005 (Program will exit if year is less than 2005): \n");
@@ -39,7 +39,7 @@ double calc_total(int year) {
 
 
 void question_two() {
-    int year = get_input();
+    int year = get_year();
     double spending = calc_total(year);
 
     std::printf("In the year: %d US spending on food is estimated to be: %f (USD) \n", year, spending);
