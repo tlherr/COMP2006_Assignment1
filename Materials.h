@@ -13,8 +13,8 @@ class BaseMaterial {
     public:
         enum Constants {
             CELSIUS = 1,
-            KELVIN = 2,
-            FAHRENHEIT = 3,
+            FAHRENHEIT = 2,
+            KELVIN = 3,
             ERROR_MARGIN = 5
         };
 
@@ -25,7 +25,7 @@ class BaseMaterial {
         int int_boiling_point_fahrenheit;
 
     public:
-        void setBoilingPoints (int celsius, int kelvin ,int fahrenheit) {
+        void setBoilingPoints (int celsius, int fahrenheit ,int kelvin) {
             int_boiling_point_celsius = celsius;
             int_boiling_point_fahrenheit = fahrenheit;
             int_boiling_point_kelvin = kelvin;
@@ -36,32 +36,42 @@ class BaseMaterial {
         std::string getDisplayName() {
             return name;
         }
-        bool isBoiling(int mode, int temp) {
+        bool isBoiling(int mode, int given_temp) {
 
             if(!int_boiling_point_celsius && !int_boiling_point_kelvin && !int_boiling_point_fahrenheit) {
-                throw std::invalid_argument("Missing celcius, kelvin or fahrenheit");
+                throw std::invalid_argument("Missing celcius, kelvin or fahrenheit temperature for material");
             }
 
-            int difference = 0;
+            int temp;
 
             switch(mode) {
                 case(BaseMaterial::CELSIUS):
-                    difference = int_boiling_point_celsius - temp;
+                    temp = int_boiling_point_celsius;
                     break;
                 case(BaseMaterial::KELVIN):
-                    difference = int_boiling_point_kelvin - temp;
+                    temp = int_boiling_point_kelvin;
                     break;
                 case(BaseMaterial::FAHRENHEIT):
-                    difference = int_boiling_point_fahrenheit - temp;
+                    temp = int_boiling_point_fahrenheit;
+                    break;
+                default:
+                    temp = int_boiling_point_celsius;
                     break;
             }
 
-            std::printf("Temp: %d Difference: %d Percentage: %d \n", temp, difference, (temp * ERROR_MARGIN));
+            //Calculation should be the following: make sure we know what temperature we are using
+            //Determine if the given temperature is within +/- 5% (ERROR_MARGIN) of our boiling point
+            //If it is return true, if not return false
 
+            int temp_range = (temp * ERROR_MARGIN)/100;
 
-            //If there is more than a 5% difference return false
-            return ((temp * ERROR_MARGIN) / 100) < abs(difference);
+            //We now have the range of 5% of that temp, find the absolute value of the difference
+            int range_high = temp + temp_range;
+            int range_low = temp - temp_range;
 
+            std::printf("Comparing Material: %s Boiling Point: [%d] Error Margin: [%d] Range High: [%d] Range Low: [%d] \n", getDisplayName().c_str(), temp, temp_range, range_high, range_low);
+
+            return given_temp >= range_low && given_temp <= range_high;
         };
 };
 
