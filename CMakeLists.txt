@@ -3,5 +3,5 @@ project(COMP2006_Assignment1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp Ass1-Boiling-ThomasHerr.cpp Materials.h Temperature.h)
+set(SOURCE_FILES main.cpp Materials.h Temperature.h Ass1-Boiling-ThomasHerr.h)
 add_executable(COMP2006_Assignment1 ${SOURCE_FILES})

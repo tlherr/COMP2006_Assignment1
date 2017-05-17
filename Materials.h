@@ -56,8 +56,11 @@ class BaseMaterial {
                     break;
             }
 
+            std::printf("Temp: %d Difference: %d Percentage: %d \n", temp, difference, (temp * ERROR_MARGIN));
+
+
             //If there is more than a 5% difference return false
-            return ((temp * ERROR_MARGIN) / 100) < difference;
+            return ((temp * ERROR_MARGIN) / 100) < abs(difference);
 
         };
 };
