@@ -31,7 +31,7 @@ int main() {
 
     switch(question) {
         default:
-            std::printf("No question selected, exiting");
+            std::printf("No question selected, exiting \n");
             return 0;
         case 1:
             COMP2006_ASSIGNMENT1_ASS1_BOILING_THOMASHERR_H::question_one();
