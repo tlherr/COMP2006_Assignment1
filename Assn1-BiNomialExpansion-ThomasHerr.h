@@ -87,21 +87,46 @@ void binomial_theorem(std::string expression) {
 
     //Get the power being raised from the expression
     std::cmatch end_exponent_match;
-    if(std::regex_search(expression.c_str(), end_exponent_match, std::regex("([)][\\\\^][0-9])"))) {
-        n = expression[end_exponent_match.prefix().length()+2];
+    if(std::regex_search(expression.c_str(), end_exponent_match, std::regex("([)][\\^][0-9])"))) {
+        //Subtract 48 from ascii table value
+        n = (int)end_exponent_match.str()[2] - 48;
     } else {
         n = 1;
     }
 
-    //Get the terms
-    //(([0-9][a-z])|[0-9]+)
-    std::cmatch term_match;
-    while(std::regex_search(expression.c_str(), term_match, std::regex("(([0-9][a-z])|[0-9]+)"))) {
-        //Getting terms, expecting any number letter or just number combinations
-        terms.push_back(term_match.str());
+    std::cout << "Power: " << n << std::endl;
+
+    int operator_position = 0;
+    char operator_type;
+    for(int j = 0; j<expression.size(); j++) {
+        //Look for operators
+        if(expression[j]=='+'||expression[j]=='-'||expression[j]=='*'||expression[j]=='/'||expression[j]==')') {
+            //Get the substring from start to this position;
+            operator_type = expression[j];
+            std::cout << "Operator: " << operator_type << std::endl;
+            std::string term_substring = expression.substr((unsigned long) operator_position, (unsigned long) j);
+            operator_position = j;
+            std::cmatch term_match;
+
+            if(std::regex_search(term_substring.c_str(), term_match, std::regex("(([0-9][a-z])+)"))) {
+                std::cout << "Term with Variable Parsed: " << term_match.str() << std::endl;
+                terms.push_back(term_match.str());
+            } else if(std::regex_search(term_substring.c_str(), term_match, std::regex("([!\\^][0-9])"))) {
+                std::cout << "Term without Variable Parsed: " << term_match.str() << std::endl;
+            }
+        }
+
     }
 
-    for(int i =)
+    //(n choose k) * a^(n-k) * b^k
+    for(int i = n; i > 0; i--) {
+        for(k; k < n; k++) {
+            int n_choose_k = factorial(n) / (factorial(k) * factorial(n - k));
+            std::cout << "(" << n_choose_k << "*";
+            std::cout << terms.at(0) << "^(" << n << "-" << k << ")*" << terms.at(1) << "^" << k << ") + ";
+        }
+    }
+
 }
 
 
@@ -121,41 +146,40 @@ void generate_pascal(int lines, std::string expression) {
 
 
 void question_three() {
-//    int option;
-//    for (;;) {
-//        std::printf("Select Option: \n");
-//        std::printf("1) Draw Triangle \n");
-//        std::printf("2) Enter Polynomial \n");
-//
-//        if(std::cin >> option) {
-//            if(option==1|option==2) {
-//                std::printf("Option %d selected \n", option);
-//                break;
-//            } else {
-//                std::printf("Invalid input provided, please enter an integer from the above list \n");
-//                std::cin.clear();
-//                std::cin.ignore();
-//            }
-//        } else {
-//            std::printf("Invalid input provided, please try again \n");
-//            std::cin.clear();
-//            std::cin.ignore();
-//        }
-//    }
-//
-//    int lines = get_lines();
-//
-//    switch(option) {
-//        case 1:
-//            draw_pascal(lines);
-//            break;
-//        case 2:
-//            std::string polynomial = get_polynomial();
-//            generate_pascal(lines, polynomial);
-//            break;
-//    }
+    int option;
+    for (;;) {
+        std::printf("Select Option: \n");
+        std::printf("1) Draw Triangle \n");
+        std::printf("2) Enter Polynomial \n");
 
-    binomial_theorem("3x-24y)^7");
+        if(std::cin >> option) {
+            if(option==1|option==2) {
+                std::printf("Option %d selected \n", option);
+                break;
+            } else {
+                std::printf("Invalid input provided, please enter an integer from the above list \n");
+                std::cin.clear();
+                std::cin.ignore();
+            }
+        } else {
+            std::printf("Invalid input provided, please try again \n");
+            std::cin.clear();
+            std::cin.ignore();
+        }
+    }
+
+    int lines = get_lines();
+
+    switch(option) {
+        case 1:
+            draw_pascal(lines);
+            break;
+        case 2:
+            std::string polynomial = get_polynomial();
+            binomial_theorem("(3x-24y)^7");
+            break;
+    }
+
 }
 
 

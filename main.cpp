@@ -47,7 +47,7 @@ int main() {
     }
 
     #if defined(__linux__)
-        system( "read -n 1 -s -p \"Press any key to continue...\"" );
+        __pause();
     #elif defined(__APPLE__)
         system( "read -n 1 -s -p \"Press any key to continue...\"" );
     #elif defined(_WIN32)
