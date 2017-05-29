@@ -29,3 +29,21 @@ Allow the user to enter a polynomial and use the binomial theorm to expand it.  
 
 Which is modelled by:
 (A+B)^n=a^n+n*A^(n-1) B+(n(n-1))/2! A^(n-2) B^2+(n(n-1)(n-2))/3! A^(n-3) B^3+⋯+b^n
+
+## Environment
+
+Compiled with the following:
+
+Windows 10 64 Bit
+MinGW (5.0)
+CMake 3.7.2
+GNU Make 3.82.90
+
+C++ Compiler: g++.exe
+Using built-in specs.
+COLLECT_GCC=C:\MinGW\bin\g++.exe
+COLLECT_LTO_WRAPPER=c:/mingw/bin/../libexec/gcc/mingw32/5.3.0/lto-wrapper.exe
+Target: mingw32
+Configured with: ../src/gcc-5.3.0/configure --build=x86_64-pc-linux-gnu --host=mingw32 --prefix=/mingw --disable-win32-registry --target=mingw32 --with-arch=i586 --enable-languages=c,c++,objc,obj-c++,fortran,ada --enable-static --enable-shared --enable-threads --with-dwarf2 --disable-sjlj-exceptions --enable-version-specific-runtime-libs --with-libintl-prefix=/mingw --enable-libstdcxx-debug --with-tune=generic --enable-libgomp --disable-libvtv --enable-nls : (reconfigured) ../src/gcc-5.3.0/configure --build=x86_64-pc-linux-gnu --host=mingw32 --prefix=/mingw --disable-win32-registry --target=mingw32 --with-arch=i586 --enable-languages=c,c++,objc,obj-c++,fortran,ada --enable-static --enable-shared --enable-threads --with-dwarf2 --disable-sjlj-exceptions --enable-version-specific-runtime-libs --with-libiconv-prefix=/mingw --with-libintl-prefix=/mingw --enable-libstdcxx-debug --with-tune=generic --enable-libgomp --disable-libvtv --enable-nls
+Thread model: win32
+gcc version 5.3.0 (GCC)
