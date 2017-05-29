@@ -87,6 +87,7 @@ bool validate_binomial(std::string expression) {
         valid = false;
     }
 
+
     return valid;
 }
 
