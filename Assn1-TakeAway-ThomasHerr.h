@@ -34,7 +34,7 @@ int get_year(){
 }
 
 double calc_total(int year) {
-    return 33.2 + 16.8 * year;
+    return 33.2 + 16.8 * (year - 2005);
 }
 
 
@@ -42,7 +42,7 @@ void question_two() {
     int year = get_year();
     double spending = calc_total(year);
 
-    std::printf("In the year: %d US spending on food is estimated to be: %f (USD) \n", year, spending);
+    std::printf("In the year: %d US spending on food is estimated to be: %f (Billion USD) \n", year, spending);
 }
 
 
