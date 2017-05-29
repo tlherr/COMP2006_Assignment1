@@ -34,7 +34,7 @@ int get_year(){
 }
 
 double calc_total(int year) {
-    return 33.2 + 16.8 * (year - 2005);
+    return 33.2 + 16.8 * std::abs(year - 2005);
 }
 
 
