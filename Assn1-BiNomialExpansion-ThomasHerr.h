@@ -24,14 +24,14 @@ int get_lines() {
             if(number < 0 || number > 10) {
                 std::printf("Value must be between 1 and 10... \n");
                 std::cin.clear();
-                std::cin.ignore();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             } else {
                 break;
             }
         } else {
             std::printf("Invalid Input Entered. Please try again \n");
             std::cin.clear();
-            std::cin.ignore();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
 

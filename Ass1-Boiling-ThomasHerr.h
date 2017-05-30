@@ -7,6 +7,7 @@
 #define COMP2006_ASSIGNMENT1_ASS1_BOILING_THOMASHERR_H
 
 #include <iostream>
+#include <limits>
 #include "Materials.h"
 #include "Temperature.h"
 
@@ -26,19 +27,22 @@ int get_units() {
         std::printf("2 - Fahrenheit \n");
         std::printf("3 - Kelvin \n");
 
-        if(std::cin >> type) {
-            if(type==1|type==2|type==3) {
+        std::cin >> type;
+
+        if(!std::cin.fail()) {
+            if(type==1||type==2||type==3) {
                 std::printf("Using Type: %d \n", type);
                 break;
             } else {
                 std::printf("Invalid input provided, please enter an integer from the above list \n");
                 std::cin.clear();
-                std::cin.ignore();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
+
         } else {
-            std::printf("Invalid input provided, please try again \n");
+            std::printf("Invalid input provided, please enter an integer from the above list \n");
             std::cin.clear();
-            std::cin.ignore();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
 
@@ -55,12 +59,14 @@ int get_temp() {
     for(;;) {
         std::printf("Enter an integer temperature: \n");
 
-        if(std::cin >> temp) {
+        std::cin >> temp;
+
+        if(!std::cin.fail()) {
             break;
         } else {
             std::printf("Invalid Integer Entered, please try again \n");
             std::cin.clear();
-            std::cin.ignore();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
 

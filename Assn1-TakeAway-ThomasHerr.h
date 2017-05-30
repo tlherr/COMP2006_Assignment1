@@ -22,18 +22,20 @@ int get_year(){
     for(;;) {
         std::printf("Enter a 4 digit year greater than 2005 (Program will exit if year is less than 2005): \n");
 
-        if(std::cin >> year) {
+        std::cin >> year;
+
+        if(!std::cin.fail()) {
             if(year < 2005) {
                 std::printf("Year less than 2005, exiting program... \n");
-                exit(0);
+                break;
             }
-            break;
         } else {
             std::printf("Invalid Integer Entered, expecting 4 digit integer greater than 2005. Please try again \n");
             std::cin.clear();
-            std::cin.ignore();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
+
     return year;
 }
 
