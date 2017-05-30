@@ -69,36 +69,15 @@ void draw_pascal() {
     }
 }
 
-bool validate_binomial(std::string expression) {
-    bool valid = true;
-
-    //It is surrounded by brackets
-    if(!std::regex_search(expression, std::regex("[()]", std::regex_constants::basic))) {
-        valid = false;
-    }
-
-    //Are there two terms inside with an operator
-    if(!std::regex_search(expression, std::regex("(([0-9]+[a-z])+)"))) {
-        valid = false;
-    }
-
-    //Is there an ending exponent
-    if(!std::regex_search(expression, std::regex("([)][\\^][0-9])"))) {
-        valid = false;
-    }
-
-
-    return valid;
+bool validate_term(std::string expression) {
+    return (std::regex_search(expression, std::regex("^[0-9]+[a-z]{1}$")));
 }
 
-std::string get_polynomial() {
-
-    std::string polynomial;
+std::string get_term() {
+    std::string term;
     for(;;) {
-        std::printf("Enter a polynomial in this form (3x-24y)^7 \n");
-
-        if(std::cin >> polynomial) {
-            if(!validate_binomial(polynomial)) {
+        if(std::cin >> term) {
+            if(!validate_term(term)) {
                 std::printf("Input did not match expected pattern \n");
                 std::cin.clear();
                 std::cin.ignore();
@@ -112,8 +91,37 @@ std::string get_polynomial() {
         }
     }
 
-    return polynomial;
+    return term;
 }
+
+bool validate_op(char op) {
+    return op == '+' || op == '-' || op == '/' || op == '*';
+
+}
+
+char get_operator() {
+    char op;
+    for(;;) {
+        std::printf("Enter an operator Allowed: + - / * \n");
+
+        if(std::cin >> op) {
+            if(!validate_op(op)) {
+                std::printf("Input did not match expected pattern \n");
+                std::cin.clear();
+                std::cin.ignore();
+            } else {
+                break;
+            }
+        } else {
+            std::printf("Invalid Input Entered. Please try again \n");
+            std::cin.clear();
+            std::cin.ignore();
+        }
+    }
+
+    return op;
+}
+
 
 /**
  * (a+b)^n = the sum from k=0 to n of (n choose k) * a^(n-k) * b^k
@@ -121,74 +129,31 @@ std::string get_polynomial() {
  * Example: (3x-24y)^7
  *
  */
-void binomial_theorem(std::string expression) {
-    int n;
+void binomial_theorem() {
+
+    //Get first term
+    std::printf("Enter first term (Example: 3x) \n");
+    std::string term1 = get_term();
+    //Get operator
+    char op = get_operator();
+    //Get second term
+    std::printf("Enter second term (Example: 3x) \n");
+    std::string term2 = get_term();
+    //Get Power
+    std::printf("Enter a power: ");
+    int n = get_lines();
+
     int k = 0;
-    int a;
-    int b;
-
-    std::vector<std::string> terms;
-
-    //Get the power being raised from the expression
-    std::cmatch end_exponent_match;
-    if(std::regex_search(expression.c_str(), end_exponent_match, std::regex("([)][\\^][0-9])"))) {
-        //Subtract 48 from ascii table value
-        n = (int)end_exponent_match.str()[2] - 48;
-    } else {
-        n = 1;
-    }
-
-    std::cout << "Power: " << n << std::endl;
-
-    int operator_position = 0;
-    char operator_type;
-    for(int j = 0; j<expression.size(); j++) {
-        //Look for operators
-        if(expression[j]=='+'||expression[j]=='-'||expression[j]=='*'||expression[j]=='/'||expression[j]==')') {
-            //Get the substring from start to this position;
-            if(expression[j]!=')') {
-                operator_type = expression[j];
-                std::cout << "Operator: " << operator_type << std::endl;
-            }
-
-            std::string term_substring = expression.substr((unsigned long) operator_position, (unsigned long) j);
-            operator_position = j;
-            std::cmatch term_match;
-
-            if(std::regex_search(term_substring.c_str(), term_match, std::regex("(([0-9]+[a-z])+)"))) {
-                std::cout << "Term with Variable Parsed: " << term_match.str() << std::endl;
-                terms.push_back(term_match.str());
-            } else if(std::regex_search(term_substring.c_str(), term_match, std::regex("([!\\^][0-9])"))) {
-                std::cout << "Term without Variable Parsed: " << term_match.str() << std::endl;
-            }
-        }
-    }
 
     //(n choose k) * a^(n-k) * b^k
     for(int i = n; i >= 0; i--) {
         for(k; k <= n; k++) {
             int n_choose_k = factorial(n) / (factorial(k) * factorial(n - k));
-            std::cout << n_choose_k << "(" << terms.at(0) << ")^" << n << "-" << k << " *" << operator_type << terms.at(1) << "^" << k << " + ";
+            std::cout << n_choose_k << "(" << term1 << ")^" << n << "-" << k << " *" << op << term2 << "^" << k << " + ";
         }
     }
 
 }
-
-
-void generate_pascal(int lines, std::string expression) {
-    int n = 0;
-    int k = 0;
-
-    for(n; n<=lines; n++) {
-        for (k = 0; k <= n; k++) {
-            int number = factorial(n) / (factorial(k) * factorial(n - k));
-        }
-
-        std::cout << "\n";
-    }
-
-}
-
 
 void question_three() {
     int option;
@@ -218,8 +183,10 @@ void question_three() {
             draw_pascal();
             break;
         case 2:
-            std::string polynomial = get_polynomial();
-            binomial_theorem(polynomial);
+            binomial_theorem();
+            break;
+        default:
+            std::cout << "Invalid Option Provided, Exiting...";
             break;
     }
 
