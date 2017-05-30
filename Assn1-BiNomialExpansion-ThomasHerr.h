@@ -10,6 +10,11 @@
 #include <regex>
 #include <vector>
 
+/**
+ * Get user input, validate it is an integer in reuqested range (0-10)
+ * Ask for another entry if current is invalid
+ * @return Integer Number of lines of triangle to generate
+ */
 int get_lines() {
     int number;
     for(;;) {
@@ -33,15 +38,20 @@ int get_lines() {
     return number;
 }
 
+/**
+ * Recursive factorial function, decrease multiplier on each iteration
+ * @param Integer Number to calculate factorial of
+ * @return current factorial or final result depending on number
+ */
 int factorial(int number) {
-    if(number==0) {
-        return 1;
-    }
+    if(number <= 1) return 1;
 
-    return number * factorial(number -1);
+    return number * factorial(number - 1);
 }
 
-
+/**
+ * Draw pascals triangle based on user input
+ */
 void draw_pascal() {
 
     int lines = get_lines();
@@ -58,8 +68,6 @@ void draw_pascal() {
         std::cout << std::setw(left_padding);
 
         for(k=0; k<=n; k++) {
-            //factorial(n)/(factorial(k)*factorial(n-k));
-            //number of spaces in the row are equal to n
             int number = factorial(n)/(factorial(k)*factorial(n-k));
             std::cout << " " << number;
         }
@@ -69,10 +77,18 @@ void draw_pascal() {
     }
 }
 
+/**
+ * Validate a given term, looking for any number of digits followed by a single character between a to z
+ * @param expression String User Input
+ * @return Boolean is term valid or should we discard it and ask user for another
+ */
 bool validate_term(std::string expression) {
     return (std::regex_search(expression, std::regex("^[0-9]+[a-z]{1}$")));
 }
-
+/**
+ * Input loop asking and validating a term
+ * @return String term
+ */
 std::string get_term() {
     std::string term;
     for(;;) {
@@ -94,11 +110,19 @@ std::string get_term() {
     return term;
 }
 
+/**
+ * Validate user input to ensure they provided a valid arithmetic operator
+ * @param op Char user input character
+ * @return Boolean if operator provided is valid
+ */
 bool validate_op(char op) {
     return op == '+' || op == '-' || op == '/' || op == '*';
 
 }
-
+/**
+ * Input loop asking for an arithmetic operator and validating input
+ * @return Char operator provided by user
+ */
 char get_operator() {
     char op;
     for(;;) {
@@ -122,12 +146,10 @@ char get_operator() {
     return op;
 }
 
-
 /**
+ * Function to use binomial theorem to expand a binomial
+ * @ref: http://www.purplemath.com/modules/binomial2.htm
  * (a+b)^n = the sum from k=0 to n of (n choose k) * a^(n-k) * b^k
- *
- * Example: (3x-24y)^7
- *
  */
 void binomial_theorem() {
 
@@ -155,6 +177,9 @@ void binomial_theorem() {
 
 }
 
+/**
+ * Ask user what they would like to do, if a valid selection run that option
+ */
 void question_three() {
     int option;
     for (;;) {

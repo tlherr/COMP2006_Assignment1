@@ -89,6 +89,9 @@ void check_substances(int mode, int temp) {
     }
 }
 
+/**
+ * Ask user what they would like to do, if a valid selection run that option
+ */
 void question_one() {
     BaseMaterial water;
     BaseMaterial mercury;

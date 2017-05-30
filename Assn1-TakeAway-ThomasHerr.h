@@ -13,6 +13,10 @@
 
 #include <iostream>
 
+/**
+ * Input loop to ask for year to calculate, specifically asking for years greater than 2005 and at least 4 digits
+ * @return Integer year to use in calculation
+ */
 int get_year(){
     int year;
     for(;;) {
@@ -33,11 +37,19 @@ int get_year(){
     return year;
 }
 
+/**
+ * Using specified formula F(t) = 33.2 + 16.8t where t is the difference in years from 2005 calculate total spending
+ * @param year Integer 4 digit year
+ * @return Double spending amount
+ */
 double calc_total(int year) {
     return 33.2 + 16.8 * std::abs(year - 2005);
 }
 
 
+/**
+ * Ask user what they would like to do, if a valid selection run that option
+ */
 void question_two() {
     int year = get_year();
     double spending = calc_total(year);
